@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>七原罪天堂私服｜官網更新申請表</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Microsoft JhengHei',sans-serif;font-size:13px;background:#f0f4f8;color:#222;padding:20px}
+.wrap{max-width:720px;margin:0 auto;background:#fff;padding:32px;border:1px solid #ddd;border-radius:6px;box-shadow:0 2px 8px rgba(0,0,0,.06)}
+h1{font-size:20px;text-align:center;margin-bottom:4px;color:#1a3a2e}
+.subtitle{text-align:center;color:#888;font-size:12px;margin-bottom:28px}
+.client-badge{display:inline-block;background:#1a3a2e;color:#a0c878;font-size:11px;padding:3px 10px;border-radius:12px;margin-bottom:24px}
+h2{font-size:13px;background:#1a3a2e;color:#a0c878;padding:7px 12px;margin:22px 0 12px;letter-spacing:.04em;border-radius:3px}
+.field{margin-bottom:12px}
+label{display:block;font-size:11px;color:#555;margin-bottom:4px;font-weight:600}
+input[type=text],input[type=url],textarea,select{
+  width:100%;border:1px solid #ccc;padding:8px 10px;font-size:13px;
+  font-family:inherit;border-radius:4px;transition:border .2s}
+input:focus,textarea:focus,select:focus{outline:none;border-color:#4a9060}
+textarea{resize:vertical;min-height:90px;line-height:1.6}
+.required{color:#c00}
+.note{font-size:11px;color:#888;margin-top:4px;line-height:1.6}
+.fee-box{background:#f0f7f0;border-left:4px solid #4a9060;padding:10px 14px;border-radius:0 4px 4px 0;margin-top:6px;font-size:12px;color:#2a6040}
+.fee-box strong{font-size:14px;color:#1a3a2e}
+.upload-area{border:2px dashed #ccc;border-radius:4px;padding:16px;text-align:center;cursor:pointer;transition:border .2s;background:#fafafa}
+.upload-area:hover,.upload-area.dragover{border-color:#4a9060;background:#f0f7f0}
+.upload-area p{font-size:12px;color:#888;margin-top:6px}
+#file-preview{margin-top:10px;display:none}
+#file-preview img{max-width:100%;max-height:200px;border-radius:4px;border:1px solid #ddd}
+#file-name{font-size:11px;color:#4a9060;margin-top:6px}
+.or-divider{display:flex;align-items:center;gap:8px;margin:10px 0;color:#aaa;font-size:11px}
+.or-divider::before,.or-divider::after{content:'';flex:1;height:1px;background:#eee}
+.submit-btn{width:100%;background:#1a3a2e;color:#fff;border:none;padding:13px;font-size:14px;font-weight:bold;border-radius:4px;cursor:pointer;margin-top:20px;transition:background .2s}
+.submit-btn:hover{background:#2a5a3e}
+.submit-btn:disabled{background:#aaa;cursor:not-allowed}
+#submit-status{margin-top:12px;font-size:13px;display:none;text-align:center;padding:10px;border-radius:4px}
+.warn-box{background:#fffbe6;border-left:4px solid #f5a623;padding:8px 12px;font-size:11px;color:#7a5a00;border-radius:0 4px 4px 0;margin-top:6px}
+#size-warning{display:none}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<h1>官網更新申請表</h1>
+<div style="text-align:center;margin-bottom:8px">
+  <span class="client-badge">七原罪天堂私服</span>
+</div>
+<p class="subtitle">填寫完畢後送出，確認收款後將於當晚進行更新，完成後以 LINE 通知您</p>
+
+<input type="hidden" id="line_id" value="ok1088">
+
+<!-- A. 更新類別 -->
+<h2>A．更新類別</h2>
+<div class="field">
+  <label>本次更新的項目 <span class="required">*</span></label>
+  <select id="update_category" onchange="updateFeePreview()">
+    <option value="">── 請選擇 ──</option>
+  </select>
+</div>
+<div id="fee-preview" class="fee-box" style="display:none">
+  費用估算：<strong id="fee-text">-</strong>
+  <span style="font-size:11px;color:#888;margin-left:8px">（若有提供圖片，+NT$300）</span>
+</div>
+
+<!-- B. 更新內容說明 -->
+<h2>B．更新內容說明</h2>
+<div class="field">
+  <label>請詳細說明本次想更新的內容 <span class="required">*</span></label>
+  <textarea id="update_content" placeholder="例：把首頁 Banner 換成過年活動圖，活動日期 2/10~2/16，文字改為「雙倍經驗活動開跑！限時 7 天」"></textarea>
+  <p class="note">描述越詳細，更新越精準，也能避免來回修改的費用產生。</p>
+</div>
+
+<!-- C. 圖檔提供 -->
+<h2>C．圖檔提供（如適用）</h2>
+<div class="field">
+  <label>圖片連結（Google Drive / Dropbox / Imgur 等，建議方式）</label>
+  <input type="url" id="image_link" placeholder="https://drive.google.com/..." oninput="updateFeePreview()">
+  <p class="note">請確認分享權限為「知道連結的人皆可檢視」</p>
+</div>
+
+<div class="or-divider">或 直接上傳</div>
+
+<div class="field">
+  <div class="upload-area" id="upload-area" onclick="document.getElementById('file-input').click()"
+       ondragover="handleDragOver(event)" ondragleave="handleDragLeave(event)" ondrop="handleDrop(event)">
+    <div>📎 點此選擇圖片，或將圖片拖曳到此區域</div>
+    <p>支援 JPG、PNG、WebP，檔案大小限制 2MB<br>超過 2MB 請使用上方連結方式提供</p>
+  </div>
+  <input type="file" id="file-input" accept="image/jpeg,image/png,image/webp" style="display:none" onchange="handleFileSelect(event)">
+  <div id="size-warning" class="warn-box">⚠️ 圖片超過 2MB，請改用上方「圖片連結」方式提供</div>
+  <div id="file-preview">
+    <img id="preview-img" src="" alt="預覽">
+    <div style="display:flex;align-items:center;gap:8px;margin-top:4px">
+      <div id="file-name"></div>
+      <button type="button" onclick="clearFile()" style="font-size:11px;padding:2px 8px;border:1px solid #ccc;border-radius:3px;background:#fff;cursor:pointer;color:#c00">✕ 移除</button>
+    </div>
+  </div>
+</div>
+
+<!-- D. 備註 -->
+<h2>D．備註 / 其他說明</h2>
+<div class="field">
+  <textarea id="extra_note" placeholder="其他需要補充的說明（可留空）" style="min-height:60px"></textarea>
+</div>
+
+<button class="submit-btn" id="submit-btn" onclick="submitUpdate()">送出更新申請</button>
+<div id="submit-status"></div>
+
+</div>
+
+<script>
+const CLIENT_ID = 'sin7';
+const CLIENT_CATEGORIES = [
+  { key: 'banner_replace',  label: 'Banner / 首頁大圖更換',               min: 800,  max: 1500 },
+  { key: 'announcement',    label: '最新公告 / 公告欄更新',               min: 500,  max: 1200 },
+  { key: 'server_info',     label: '伺服器核心設定更新（版本、倍率等）',  min: 500,  max: 1200 },
+  { key: 'character_info',  label: '職業介紹內容更新',                    min: 800,  max: 1500 },
+  { key: 'boss_card',       label: 'BOSS卡資料庫更新',                    min: 800,  max: 1500 },
+  { key: 'item_db',         label: '道具資料庫更新（特殊裝備 / 符石）',   min: 800,  max: 1500 },
+  { key: 'equip_db',        label: '裝備資料庫更新（精選裝備）',          min: 800,  max: 1500 },
+  { key: 'weapon_db',       label: '武器資料庫更新',                      min: 800,  max: 1500 },
+  { key: 'skill_db',        label: '金技資料庫更新',                      min: 800,  max: 1500 },
+  { key: 'mapbadge_db',     label: '地圖徽章資料庫更新',                  min: 800,  max: 1500 },
+  { key: 'material_db',     label: '材料收集資料庫更新',                  min: 800,  max: 1500 },
+  { key: 'color_db',        label: '炫色資料庫更新',                      min: 800,  max: 1500 },
+  { key: 'bonus_db',        label: '加成資料庫更新（轉生能力加成）',      min: 800,  max: 1500 },
+  { key: 'newbie_guide',    label: '新手指導教學更新',                    min: 800,  max: 1500 },
+  { key: 'guide_content',   label: '攻略指南文章更新',                    min: 800,  max: 1500 },
+  { key: 'rank_update',     label: '排行榜更新',                          min: 500,  max: 1200 },
+  { key: 'download_link',   label: '下載連結更換',                        min: 500,  max:  800 },
+  { key: 'social_links',    label: '社群連結更換（Discord / FB / LINE）',  min: 500,  max:  800 },
+  { key: 'image_replace',   label: '圖片更換 / 新增',                     min: 800,  max: 1500 },
+  { key: 'text_only',       label: '純文案修改（僅文字，無圖片）',        min: 500,  max: 1200 },
+  { key: 'other',           label: '其他（請在說明欄詳述）',              min: 1000, max: 5000 }
+];
+
+const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzE46gphrd2XqI9Hi5uKXpGyT6gChQDoDtIZIym1FNvZITHXylL3AA4XwAlGRA1Vy-z/exec';
+
+(function buildSelect() {
+  const sel = document.getElementById('update_category');
+  CLIENT_CATEGORIES.forEach(function(c) {
+    const opt = document.createElement('option');
+    opt.value = c.key;
+    opt.textContent = c.label;
+    sel.appendChild(opt);
+  });
+})();
+
+let imageBase64 = '';
+let imageMime   = '';
+
+function updateFeePreview() {
+  const catKey = document.getElementById('update_category').value;
+  const hasImg = imageBase64 || document.getElementById('image_link').value.trim();
+  const box    = document.getElementById('fee-preview');
+  const txt    = document.getElementById('fee-text');
+  const conf   = CLIENT_CATEGORIES.find(function(c){ return c.key === catKey; });
+  if (!conf) { box.style.display = 'none'; return; }
+  const adj = hasImg ? 300 : 0;
+  txt.textContent = 'NT$' + (conf.min+adj).toLocaleString() + ' ~ ' + (conf.max+adj).toLocaleString();
+  box.style.display = 'block';
+}
+
+function handleFileSelect(e) { processFile(e.target.files[0]); }
+function handleDragOver(e)  { e.preventDefault(); document.getElementById('upload-area').classList.add('dragover'); }
+function handleDragLeave(e) { document.getElementById('upload-area').classList.remove('dragover'); }
+function handleDrop(e) {
+  e.preventDefault();
+  document.getElementById('upload-area').classList.remove('dragover');
+  if (e.dataTransfer.files[0]) processFile(e.dataTransfer.files[0]);
+}
+
+function processFile(file) {
+  if (!file) return;
+  document.getElementById('size-warning').style.display = 'none';
+  if (file.size > 2 * 1024 * 1024) {
+    document.getElementById('size-warning').style.display = 'block';
+    imageBase64 = ''; imageMime = '';
+    document.getElementById('file-preview').style.display = 'none';
+    return;
+  }
+  imageMime = file.type;
+  const reader = new FileReader();
+  reader.onload = function(ev) {
+    const full = ev.target.result;
+    imageBase64 = full.split(',')[1];
+    document.getElementById('preview-img').src = full;
+    document.getElementById('file-name').textContent = '✅ ' + file.name + '（' + (file.size/1024).toFixed(0) + ' KB）';
+    document.getElementById('file-preview').style.display = 'block';
+    updateFeePreview();
+  };
+  reader.readAsDataURL(file);
+}
+
+function clearFile() {
+  imageBase64 = ''; imageMime = '';
+  document.getElementById('file-input').value = '';
+  document.getElementById('file-preview').style.display = 'none';
+  document.getElementById('size-warning').style.display = 'none';
+  updateFeePreview();
+}
+
+function submitUpdate() {
+  const lineId  = document.getElementById('line_id').value.trim();
+  const catKey  = document.getElementById('update_category').value;
+  const content = document.getElementById('update_content').value.trim();
+
+  if (!catKey)  { alert('請選擇更新類別'); document.getElementById('update_category').focus(); return; }
+  if (!content) { alert('請填寫更新內容說明'); document.getElementById('update_content').focus(); return; }
+
+  const payload = {
+    client_id:       CLIENT_ID,
+    line_id:         lineId,
+    update_category: catKey,
+    update_content:  content,
+    image_link:      document.getElementById('image_link').value.trim(),
+    image_base64:    imageBase64,
+    image_mime:      imageMime,
+    extra_note:      document.getElementById('extra_note').value.trim(),
+  };
+
+  const btn    = document.getElementById('submit-btn');
+  const status = document.getElementById('submit-status');
+  btn.disabled = true; btn.textContent = '傳送中…';
+  status.style.display = 'block'; status.style.color = '#666'; status.style.background = '#f9f9f9';
+  status.textContent = '資料傳送中，請稍候…';
+
+  fetch(SCRIPT_URL, { method: 'POST', body: JSON.stringify(payload) })
+    .then(function(r) { return r.json(); })
+    .then(function(res) {
+      if (res.result === 'success') {
+        status.style.color = '#2a7a2a'; status.style.background = '#f0f9f0';
+        status.innerHTML = '✅ 申請已送出！費用估算：<strong>' + res.fee + '</strong><br>確認收款後將於當晚進行更新，完成後以 LINE 通知您。';
+        btn.textContent = '已送出';
+      } else {
+        throw new Error(res.error || 'unknown');
+      }
+    })
+    .catch(function(err) {
+      status.style.color = '#c00'; status.style.background = '#fff5f5';
+      status.textContent = '❌ 送出失敗，請截圖以 LINE 傳送給我們。錯誤：' + err.message;
+      btn.disabled = false; btn.textContent = '重新送出';
+    });
+}
+</script>
+</body>
+</html>
